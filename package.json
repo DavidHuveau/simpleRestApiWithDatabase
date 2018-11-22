@@ -10,7 +10,9 @@
   "author": "DHUV",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5"
+    "babel-register": "^6.26.0",
+    "cors": "^2.8.5",
+    "mysql": "^2.16.0"
   },
   "devDependencies": {
     "morgan": "^1.9.1"

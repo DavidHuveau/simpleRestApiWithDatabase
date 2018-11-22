@@ -423,5 +423,6 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+database.js
 
 # End of https://www.gitignore.io/api/node,linux,visualstudio
