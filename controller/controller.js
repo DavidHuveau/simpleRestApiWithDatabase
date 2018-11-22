@@ -15,11 +15,15 @@ studentsRouter.route('/:id(\\d+)')
     // get a student from an id
     .get((req, res) => {
         const resultQuery = 'SELECT * FROM students WHERE id = ?;';
-        connection.query(resultQuery, req.params.id, (error, result) => {
-            if(error) 
+        connection.query(resultQuery, req.params.id, (err, result) => {
+            if(err) 
                 res.status(500).send('error to find one student');
-            else
-                res.json(success(result));
+            else {
+                if (result[0] !== undefined)
+                    res.json(success(result));
+                else
+                    res.json(error(`Wrong id value ${req.params.id}`));
+            }
         })
     })
 
