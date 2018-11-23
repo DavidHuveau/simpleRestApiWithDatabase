@@ -87,7 +87,7 @@ studentsRouter.route('/')
     // Insert a student
     .post((req, res) => {
         if (req.body.name) {
-            const resultQuery = `INSERT INTO students (name)
+            let resultQuery = `INSERT INTO students (name)
             SELECT * FROM (SELECT ?) AS tmp
             WHERE NOT EXISTS (
                 SELECT name FROM students WHERE name = ?
@@ -97,8 +97,18 @@ studentsRouter.route('/')
                     res.status(500).send(`error to insert the name : ${req.body.name}`);
                 else {                    
                     if (result.insertId) {
-                        // res.json(success(result));
-                        res.status(200).end();
+                        // returns an object representing the added student
+                        resultQuery = 'SELECT * FROM students WHERE id = ?;';
+                        connection.query(resultQuery, result.insertId, (err, result) => {
+                            if(err) 
+                                res.status(500).send('Error for return the inserted student');
+                            else {
+                                if (result[0] !== undefined)
+                                    res.json(success(result));
+                                else
+                                    res.json(error(`Wrong id value ${req.params.id}`));
+                            }
+                        })
                     }
                     else {
                         res.json(error('Name already Exist'));
