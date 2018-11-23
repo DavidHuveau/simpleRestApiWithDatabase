@@ -29,21 +29,26 @@ studentsRouter.route('/:id(\\d+)')
 
     // update a student from an id
     .put((req, res) => {
-        const resultQuery = 'UPDATE students SET name = ? WHERE id = ?;';
-        connection.query(resultQuery, [req.body.name, req.params.id], (error, result) => {
-            if(error) 
-                res.status(500).send(`error to update the student: ${req.params.id}`);
-            else
-                res.json(success(result));
-        })
+        if(req.body.name)  {
+            const resultQuery = 'UPDATE students SET name = ? WHERE id = ?;';
+            connection.query(resultQuery, [req.body.name, req.params.id], (error, result) => {
+                if(error) 
+                    res.status(500).send(`error to update the student: ${req.params.id}`);
+                else
+                    res.json(success(result));
+            })
+        }
+        else {
+            res.json(error('No Name value'));
+        }
     })
     
     // delete a student from an id
     .delete((req, res) => {
-        const resultQuery = 'DELETE students WHERE id = ?;';
-        connection.query(resultQuery, req.params.id, (error, result) => {
+        const resultQuery = 'DELETE FROM students WHERE id = ?;';
+        connection.query(resultQuery, +(req.params.id), (error, result) => {           
             if(error) 
-                res.status(500).send('error to find one student');
+                res.status(500).send(`error to delete the student: ${req.params.id}`);
             else
                 res.json(success(result));
         })
@@ -115,6 +120,9 @@ studentsRouter.route('/')
                     }
                 }
             })
+        }
+        else {
+            res.json(error('No Name value'));
         }
     });
 
