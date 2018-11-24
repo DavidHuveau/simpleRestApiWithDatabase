@@ -3,12 +3,11 @@ require('babel-register');
 const express = require('express');
 const {success, error} = require('./functions');
 const studentsRouter = express.Router();
-const connection = require('../model');
 
+// const connection = require('../model');
+// const students = require('../model/classes/students-class')(connection);
 
-
-
-const students = require('../model/classes/students-class')(connection);
+const students = require('../model');
 
 // use Postman with parameter: x-www-form-urlencoded
 // http://localhost:8080/api/V1/students/1
