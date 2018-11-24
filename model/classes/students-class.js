@@ -41,7 +41,7 @@ const Students = class {
                         resolve(result);
                 })
             }
-        })
+        });
     }
 
     static add(name) {
@@ -78,7 +78,36 @@ const Students = class {
             }
             else
                 reject(new Error('No Name value'));
-        })
+        });
+    }
+
+    static update(id, name) {
+        return new Promise ((resolve, reject) => {
+            if(name && name.trim().length && id)  {
+                name = name.trim();
+                const resultQuery = 'UPDATE students SET name = ? WHERE id = ?;';
+                connection.query(resultQuery, [name, id], (error, result) => {
+                    if(error) 
+                        reject(new Error(`Error to update the student: ${id}`));
+                    else
+                        resolve(true);
+                })
+            }
+            else
+                reject(new Error('No Name value'));
+        });
+    }
+    
+    static delete(id) {
+        return new Promise((resolve, reject) => {
+            const resultQuery = 'DELETE FROM students WHERE id = ?;';
+            connection.query(resultQuery, id, (error, result) => {           
+                if(error) 
+                    reject(`Error to delete the student: ${id}`);
+                else
+                    resolve(true);
+            })
+        });
     }
 };
 

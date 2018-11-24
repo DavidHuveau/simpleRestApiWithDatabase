@@ -26,29 +26,16 @@ studentsRouter.route('/:id(\\d+)')
 
     // update a student from an id
     .put((req, res) => {
-        if(req.body.name)  {
-            const resultQuery = 'UPDATE students SET name = ? WHERE id = ?;';
-            connection.query(resultQuery, [req.body.name, req.params.id], (error, result) => {
-                if(error) 
-                    res.status(500).send(`error to update the student: ${req.params.id}`);
-                else
-                    res.json(success(result));
-            })
-        }
-        else {
-            res.json(error('No Name value'));
-        }
+        students.update(req.params.id, req.body.name)
+        .then(result => res.json(success(result)))
+        .catch(err => res.json(error(err.message)));
     })
     
     // delete a student from an id
     .delete((req, res) => {
-        const resultQuery = 'DELETE FROM students WHERE id = ?;';
-        connection.query(resultQuery, +(req.params.id), (error, result) => {           
-            if(error) 
-                res.status(500).send(`error to delete the student: ${req.params.id}`);
-            else
-                res.json(success(result));
-        })
+        students.delete(req.params.id)
+        .then(result => res.json(success(result)))
+        .catch(err => res.json(error(err.message)));
     });
 
 
