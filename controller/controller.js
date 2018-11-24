@@ -5,6 +5,11 @@ const {success, error} = require('./functions');
 const studentsRouter = express.Router();
 const connection = require('../model');
 
+
+
+
+const students = require('../model/classes/students-class')(connection);
+
 // use Postman with parameter: x-www-form-urlencoded
 // http://localhost:8080/api/V1/students/1
 // exemple:
@@ -14,17 +19,9 @@ studentsRouter.route('/:id(\\d+)')
 
     // get a student from an id
     .get((req, res) => {
-        const resultQuery = 'SELECT * FROM students WHERE id = ?;';
-        connection.query(resultQuery, req.params.id, (err, result) => {
-            if(err) 
-                res.status(500).send('error to find one student');
-            else {
-                if (result[0] !== undefined)
-                    res.json(success(result));
-                else
-                    res.json(error(`Wrong id value ${req.params.id}`));
-            }
-        })
+        students.getByID(req.params.id)
+        .then(result => res.json(success(result)))
+        .catch(err => res.json(error(err.message)));
     })
 
     // update a student from an id
@@ -65,65 +62,16 @@ studentsRouter.route('/')
     // Get a student list by limiting the number of results
     // http://localhost:8080/api/V1/students?max=2
     .get((req, res) => {
-        if (req.query.max != undefined && req.query.max > 0) {
-            const resultQuery = 'SELECT * FROM students LIMIT ?;';       
-            connection.query(resultQuery, parseInt(req.query.max), (error, result) => {
-                if(error) {
-                    console.log('error in get with limit max', error.message);
-                    res.status(500).send('error to find all students with limit');
-                }
-                else
-                    res.json(success(result));
-            })
-        }
-        else if(req.query.max != undefined)
-            res.json(error('Wrong max value'));
-        else {
-            const resultQuery = 'SELECT * FROM students;';
-            connection.query(resultQuery, (error, result) => {
-                if(error) 
-                    res.status(500).send('error to find all students');
-                else
-                    res.json(success(result));
-            })
-        }
+        students.getAll(req.query.max)
+        .then(result => res.json(success(result)))
+        .catch(err => res.json(error(err.message)));
     })
 
     // Insert a student
     .post((req, res) => {
-        if (req.body.name) {
-            let resultQuery = `INSERT INTO students (name)
-            SELECT * FROM (SELECT ?) AS tmp
-            WHERE NOT EXISTS (
-                SELECT name FROM students WHERE name = ?
-            ) LIMIT 1;`;
-            connection.query(resultQuery, [req.body.name, req.body.name], (err, result) => {
-                if(err) 
-                    res.status(500).send(`error to insert the name : ${req.body.name}`);
-                else {                    
-                    if (result.insertId) {
-                        // returns an object representing the added student
-                        resultQuery = 'SELECT * FROM students WHERE id = ?;';
-                        connection.query(resultQuery, result.insertId, (err, result) => {
-                            if(err) 
-                                res.status(500).send('Error for return the inserted student');
-                            else {
-                                if (result[0] !== undefined)
-                                    res.json(success(result));
-                                else
-                                    res.json(error(`Wrong id value ${req.params.id}`));
-                            }
-                        })
-                    }
-                    else {
-                        res.json(error('Name already Exist'));
-                    }
-                }
-            })
-        }
-        else {
-            res.json(error('No Name value'));
-        }
+        students.add(req.body.name)
+        .then(result => res.json(success(result)))
+        .catch(err => res.json(error(err.message)));
     });
 
 module.exports = studentsRouter;

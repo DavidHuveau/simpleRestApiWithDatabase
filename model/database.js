@@ -1,3 +1,4 @@
+require('babel-register');
 const MySql = require('mysql');
 const config = require('./config.db');
 
