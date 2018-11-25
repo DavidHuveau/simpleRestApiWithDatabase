@@ -5,7 +5,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const config = require('./config.root');
+const { config } = require('./config.root');
 const studentsRouter = require('./controller')
 
 const PORT = config.port;

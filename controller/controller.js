@@ -14,7 +14,7 @@ const students = require('../model');
 // exemple:
 // key = name
 // value = Alexendra
-studentsRouter.route('/:id(\\d+)')
+studentsRouter.route('/students/:id(\\d+)')
 
     // get a student from an id
     .get((req, res) => {
@@ -43,7 +43,7 @@ studentsRouter.route('/:id(\\d+)')
 // exemple:
 // key = name
 // value = David
-studentsRouter.route('/')
+studentsRouter.route('/students/')
 
     // Get a student list by limiting the number of results
     // http://localhost:8080/api/V1/students?max=2

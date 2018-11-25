@@ -1,4 +1,7 @@
 require('babel-register');
+
+const { errorsMessage } = require('../../config.root');
+
 let connection;
 
 const Students = class {
@@ -8,15 +11,14 @@ const Students = class {
             const resultQuery = 'SELECT * FROM students WHERE id = ?;';
             connection.query(resultQuery, id, (err, result) => {
                 if(err) 
-                    reject(new Error('Error to find one student'));
+                    reject(new Error(`${errorsMessage.ErrorToFindOne} student`));
                 else 
                     if (result[0] !== undefined) 
                         resolve(result[0]);
                     else 
-                        reject(new Error(`Wrong id value ${id}`));
+                        reject(new Error(`${errorsMessage.WrongID} ${id}`));
             })    
         });
-
     }
 
     static getAll(max) {
@@ -25,18 +27,18 @@ const Students = class {
                 const resultQuery = 'SELECT * FROM students LIMIT ?;';       
                 connection.query(resultQuery, parseInt(max), (err, result) => {
                     if(err)
-                        reject(new Error('Error to find all students with a limit'));                  
+                        reject(new Error(`${errorsMessage.ErrorToFindAll} students with a limit`));                  
                     else
                         resolve(result);
                 })
             }
             else if(max != undefined)
-                reject(new Error('Wrong max value'));                  
+                reject(new Error(errorsMessage.WrongMaxValue));                  
             else {
                 const resultQuery = 'SELECT * FROM students;';
                 connection.query(resultQuery, (err, result) => {
                     if(err) 
-                        reject(new Error('Error to find all students'));                  
+                        reject(new Error(`${errorsMessage.ErrorToFindAll} students`));                  
                     else
                         resolve(result);
                 })
@@ -55,29 +57,29 @@ const Students = class {
                 ) LIMIT 1;`;
                 connection.query(resultQuery, [name, name], (err, result) => {
                     if(err) 
-                        reject(new Error(`error to insert the name : ${name}`));
+                        reject(new Error(`${errorsMessage.ErrorToInsert} the name : ${name}`));
                     else {                    
                         if (result.insertId) {
                             // returns an object representing the added student
                             resultQuery = 'SELECT * FROM students WHERE id = ?;';
                             connection.query(resultQuery, result.insertId, (err, result) => {
                                 if(err) 
-                                    reject(new Error('Error for return the inserted student'));
+                                    reject(new Error(`${errorsMessage.ErrorToReturnTheInserted} student`));
                                 else {
                                     if (result[0] !== undefined)
                                         resolve(result);
                                     else
-                                        reject(new Error(`Wrong id value ${result.insertId}`));
+                                        reject(new Error(`${WrongIdValue} ${result.insertId}`));
                                 }
                             })
                         }
                         else
-                            reject(new Error('Name already Exist'));
+                            reject(new Error(errorsMessage.ValueAlreadyExist));
                     }
                 })
             }
             else
-                reject(new Error('No Name value'));
+                reject(new Error(errorsMessage.NoValue));
         });
     }
 
@@ -88,13 +90,13 @@ const Students = class {
                 const resultQuery = 'UPDATE students SET name = ? WHERE id = ?;';
                 connection.query(resultQuery, [name, id], (error, result) => {
                     if(error) 
-                        reject(new Error(`Error to update the student: ${id}`));
+                        reject(new Error(`${errorsMessage.ErrorToUpdate} the student: ${id}`));
                     else
                         resolve(true);
                 })
             }
             else
-                reject(new Error('No Name value'));
+                reject(new Error(errorsMessage.NoValue));
         });
     }
     
@@ -103,7 +105,7 @@ const Students = class {
             const resultQuery = 'DELETE FROM students WHERE id = ?;';
             connection.query(resultQuery, id, (error, result) => {           
                 if(error) 
-                    reject(`Error to delete the student: ${id}`);
+                    reject(`${errorsMessage.ErrorToDelete} the student: ${id}`);
                 else
                     resolve(true);
             })
