@@ -3,19 +3,19 @@ require('babel-register');
 const STATUS_SUCCESS = 'success';
 const STATUS_ERROR = 'error';
 
-const success = (result) => {
-    return {
-        status: STATUS_SUCCESS,
-        result: result
-    };
-}
+const success = res => {
+  return {
+    status: STATUS_SUCCESS,
+    result: res
+  };
+};
 
-const error = (message) => {
-    return {
-        status: STATUS_ERROR,
-        message: message
-    };
-}
+const error = msg => {
+  return {
+    status: STATUS_ERROR,
+    message: msg
+  };
+};
 
 exports.success = success;
 exports.error = error;
