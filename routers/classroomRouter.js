@@ -1,4 +1,3 @@
-require('babel-register');
 const express = require('express');
 const { success } = require('./functions');
 const { ClassRoom } = require('../model');

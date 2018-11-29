@@ -1,4 +1,3 @@
-require('babel-register');
 // module.exports = require('./database');
 
 // to no longer need the connection in the controller!

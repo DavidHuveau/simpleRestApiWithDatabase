@@ -1,5 +1,3 @@
-require('babel-register');
-
 const { errorsMessage } = require('../../config.root');
 
 let connection;
