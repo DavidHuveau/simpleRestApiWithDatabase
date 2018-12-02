@@ -1,0 +1,206 @@
+{
+  "info": {
+    "title": "simpleRestApiWithDatabase",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "API rest to manage students"
+  },
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "students",
+      "description": "Manage students"
+    }
+  ],
+  "paths": {
+    "students/{id(\\d+)}": {
+      "get": {
+        "tags": ["students"],
+        "summary": "students/{id(\\d+)}",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "id(\\d+)",
+            "in": "path",
+            "required": true
+          }
+        ]
+      },
+      "put": {
+        "tags": ["students"],
+        "summary": "students/{id(\\d+)}",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "id(\\d+)",
+            "in": "path",
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["students"],
+        "summary": "students/{id(\\d+)}",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "id(\\d+)",
+            "in": "path",
+            "required": true
+          }
+        ]
+      }
+    },
+    "students": {
+      "get": {
+        "tags": ["students"],
+        "summary": "students",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "max",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["id", "name"]
+                  },
+                  "example": [
+                    {
+                      "id": 2,
+                      "name": "Samir"
+                    },
+                    {
+                      "id": 4,
+                      "name": "Quentin"
+                    },
+                    {
+                      "id": 5,
+                      "name": "Camille"
+                    },
+                    {
+                      "id": 17,
+                      "name": "toto"
+                    },
+                    {
+                      "id": 18,
+                      "name": "Pascal"
+                    },
+                    {
+                      "id": 19,
+                      "name": "Pascaline"
+                    },
+                    {
+                      "id": 20,
+                      "name": "Patou"
+                    },
+                    {
+                      "id": 21,
+                      "name": "Jojo"
+                    },
+                    {
+                      "id": 22,
+                      "name": "Rémy"
+                    },
+                    {
+                      "id": 23,
+                      "name": "David"
+                    },
+                    {
+                      "id": 24,
+                      "name": "Franck"
+                    },
+                    {
+                      "id": 28,
+                      "name": "Estelle"
+                    },
+                    {
+                      "id": 32,
+                      "name": "Maurice"
+                    },
+                    {
+                      "id": 33,
+                      "name": "Marcel"
+                    },
+                    {
+                      "id": 34,
+                      "name": "Elisa"
+                    },
+                    {
+                      "id": 35,
+                      "name": "Fabien"
+                    },
+                    {
+                      "id": 36,
+                      "name": "Fabienne"
+                    },
+                    {
+                      "id": 37,
+                      "name": "Fabienne2"
+                    },
+                    {
+                      "id": 38,
+                      "name": "Fabienne3"
+                    },
+                    {
+                      "id": 39,
+                      "name": "Fabienne4"
+                    },
+                    {
+                      "id": 40,
+                      "name": "Fabienne5"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["students"],
+        "summary": "students",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "required": true
+          }
+        ]
+      }
+    },
+    "classroom": {
+      "get": {
+        "summary": "classroom",
+        "consumes": ["application/json"],
+        "parameters": []
+      }
+    }
+  },
+  "swagger": "2.0"
+}
