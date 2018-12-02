@@ -1,3 +1,9 @@
+To see the swagger file of the OpenApiSpecification:
+http://localhost:8080/api/v1/api-docs/
+
+To see the online documentation:
+https://d-huveau.gitbook.io/api-rest-node/
+
 Get all students:
 http://localhost:8080/api/V1/students
 
@@ -20,4 +26,3 @@ use Postman with parameter: x-www-form-urlencoded
 exemple:
 key = name
 value = Alexendra
-

@@ -12,6 +12,10 @@
     {
       "name": "students",
       "description": "Manage students"
+    },
+    {
+      "name": "classroom",
+      "description": "Get the classroom"
     }
   ],
   "paths": {
@@ -196,6 +200,7 @@
     },
     "classroom": {
       "get": {
+        "tags": ["classroom"],
         "summary": "classroom",
         "consumes": ["application/json"],
         "parameters": []
