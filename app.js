@@ -8,7 +8,6 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const { config } = require('./config.root');
-const { studentsRoutes, classroomRoutes } = require('./routes');
 
 const PORT = config.port;
 
@@ -18,8 +17,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(`${config.rootAPI}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(`${config.rootAPI}/students`, studentsRoutes);
-app.use(`${config.rootAPI}/classroom`, classroomRoutes);
+app.use(`${config.rootAPI}/students`, require('./routes/students'));
+app.use(`${config.rootAPI}/classrooms`, require('./routes/classrooms'));
 app.use((req, res) => {
   res.status(404).send('Sorry cant find that!');
 });

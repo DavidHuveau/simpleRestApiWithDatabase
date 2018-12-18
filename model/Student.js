@@ -1,8 +1,8 @@
-const { errorsMessage } = require('../../config.root');
+const { errorsMessage } = require('../config.root');
 
 let connection;
 
-const Students = class {
+const Student = class {
   static getByID(id) {
     return new Promise((resolve, reject) => {
       const resultQuery = 'SELECT * FROM students WHERE id = ?;';
@@ -33,7 +33,7 @@ const Students = class {
     });
   }
 
-  static add(name) {
+  static create(name) {
     return new Promise((resolve, reject) => {
       if (name && name.trim().length) {
         const resultQueryInsert = `INSERT INTO students (name)
@@ -84,5 +84,5 @@ const Students = class {
 
 module.exports = _connection => {
   connection = _connection;
-  return Students;
+  return Student;
 };

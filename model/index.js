@@ -4,5 +4,5 @@
 const connection = require('./database');
 
 // module.exports = require('./classes/Students-class')(connection);
-exports.Students = require('./classes/Students-class')(connection);
-exports.ClassRoom = require('./classes/ClassRoom-class');
+exports.Student = require('./Student')(connection);
+exports.ClassRoom = require('./ClassRoom');
